@@ -65,8 +65,10 @@ abstract class AbstractFTPClient {
     }
 
     /**
+     * Construct a new FTP exception.
      *
      * @param string $message The message.
+     * @return FTPException Returns a new FTP exception.
      */
     final protected function newFTPException($message) {
         return new FTPException(sprintf("%s://%s:%s@%s:%d " . $message, $this->authenticator->getScheme(), $this->authenticator->getPasswordAuthentication()->getUsername(), $this->authenticator->getPasswordAuthentication()->getPassword(), $this->authenticator->getHost(), $this->authenticator->getPort()));
