@@ -33,7 +33,7 @@ abstract class AbstractFTPClient {
     /**
      * Connection.
      *
-     * @var ressource
+     * @var mixed
      */
     private $connection;
 
@@ -58,7 +58,7 @@ abstract class AbstractFTPClient {
     /**
      * Get the connection.
      *
-     * @return resource Returns the connection.
+     * @return mixed Returns the connection.
      */
     final public function getConnection() {
         return $this->connection;
@@ -88,7 +88,7 @@ abstract class AbstractFTPClient {
     /**
      * Set the connection.
      *
-     * @param ressource $connection The connection.
+     * @param mixed $connection The connection.
      * @returns AbstractFTPClient Returns this abstract FTP client.
      */
     final protected function setConnection($connection) {
