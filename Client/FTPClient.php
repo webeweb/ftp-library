@@ -42,8 +42,8 @@ class FTPClient extends AbstractFTPClient {
      * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function close() {
-        if (false === ftp_close($this->getConnection())) {
-            throw $this->newFTPException("disconnection failed");
+        if (false === @ftp_close($this->getConnection())) {
+            throw $this->newFTPException("close failed");
         }
         return $this;
     }
@@ -58,7 +58,7 @@ class FTPClient extends AbstractFTPClient {
     public function connect($timeout = 90) {
         $host = $this->getAuthenticator()->getHost();
         $port = $this->getAuthenticator()->getPort();
-        $this->setConnection(ftp_connect($host, $port, $timeout));
+        $this->setConnection(@ftp_connect($host, $port, $timeout));
         if (false === $this->getConnection()) {
             throw $this->newFTPException("connection failed");
         }

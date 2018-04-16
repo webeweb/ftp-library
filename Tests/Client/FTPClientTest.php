@@ -115,6 +115,14 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->connect();
 
         $this->assertEquals($obj, $obj->login());
+
+        try {
+            $obj->getAuthenticator()->getPasswordAuthentication()->setPassword(null);
+            $obj->login();
+        } catch (Exception $ex) {
+            $this->assertInstanceOf(IOException::class, $ex);
+            $this->assertEquals("ftp://anonymous:@speedtest.tele2.net:21 login failed", $ex->getMessage());
+        }
     }
 
     /**
@@ -236,10 +244,17 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
      */
     public function testClose() {
 
-        $obj = new FTPClient($this->authenticatorR);
+        $obj = new FTPClient($this->authenticatorW);
         $obj->connect();
 
         $this->assertEquals($obj, $obj->close());
+
+        try {
+            $this->assertEquals($obj, $obj->close());
+        } catch (Exception $ex) {
+            $this->assertInstanceOf(FTPException::class, $ex);
+            $this->assertEquals(self::TEST_FTP . " close failed", $ex->getMessage());
+        }
     }
 
 }
