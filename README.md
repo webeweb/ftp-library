@@ -3,8 +3,7 @@ ftp-library
 
 [![Build Status](https://travis-ci.org/webeweb/ftp-library.svg?branch=master)](https://travis-ci.org/webeweb/ftp-library) [![Coverage Status](https://coveralls.io/repos/github/webeweb/ftp-library/badge.svg?branch=master)](https://coveralls.io/github/webeweb/ftp-library?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webeweb/ftp-library/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webeweb/ftp-library/?branch=master) [![Latest Stable Version](https://poser.pugx.org/webeweb/ftp-library/v/stable)](https://packagist.org/packages/webeweb/ftp-library) [![Latest Unstable Version](https://poser.pugx.org/webeweb/ftp-library/v/unstable)](https://packagist.org/packages/webeweb/ftp-library) [![License](https://poser.pugx.org/webeweb/ftp-library/license)](https://packagist.org/packages/webeweb/ftp-library) [![composer.lock](https://poser.pugx.org/webeweb/ftp-library/composerlock)](https://packagist.org/packages/webeweb/ftp-library)
 
-This package contains some classes we re-use regularly into other packages or
-projects.
+Integrates FTP in your projects.
 
 `ftp-library` uses a rolling release based on git master branch which is
 considered stable.
