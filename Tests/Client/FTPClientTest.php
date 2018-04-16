@@ -23,7 +23,7 @@ use WBW\Library\FTP\Exception\FTPException;
  * FTP client test.
  *
  * @author webeweb <https://github.com/webeweb/>
- * @package WBW\Library\Core\Tests\Net
+ * @package WBW\Library\Core\Tests\Client
  * @final
  */
 final class FTPClientTest extends PHPUnit_Framework_TestCase {
