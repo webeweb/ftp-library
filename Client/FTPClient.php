@@ -12,7 +12,6 @@
 namespace WBW\Library\FTP\Client;
 
 use WBW\Library\Core\Security\Authenticator;
-use WBW\Library\FTP\Exception\FTPException;
 
 /**
  * FTP client.
