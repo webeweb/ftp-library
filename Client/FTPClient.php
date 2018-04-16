@@ -11,8 +11,8 @@
 
 namespace WBW\Library\FTP\Client;
 
-use WBW\Library\Core\Exception\IO\IOException;
 use WBW\Library\Core\Security\Authenticator;
+use WBW\Library\FTP\Exception\FTPException;
 
 /**
  * FTP client.
@@ -20,21 +20,7 @@ use WBW\Library\Core\Security\Authenticator;
  * @author webeweb <https://github.com/webeweb/>
  * @package WBW\Library\FTP\Client
  */
-class FTPClient {
-
-    /**
-     * Authenticator.
-     *
-     * @var Authenticator
-     */
-    private $authenticator;
-
-    /**
-     * Connection.
-     *
-     * @var ressource.
-     */
-    private $connection;
+class FTPClient extends AbstractFTPClient {
 
     /**
      * Constructor.
@@ -42,18 +28,22 @@ class FTPClient {
      * @param Authenticator $authenticator The authenticator.
      */
     public function __construct(Authenticator $authenticator) {
-        $this->authenticator = $authenticator;
+        parent::__construct($authenticator);
+        $this->getAuthenticator()->setScheme("ftp");
+        if (null === $this->getAuthenticator()->getPort()) {
+            $this->getAuthenticator()->setPort(21);
+        }
     }
 
     /**
      * Closes this FTP connection.
      *
      * @return FTPClient Returns this FTP client.
-     * @throws IOException Throws an IO exception if an I/O error occurs.
+     * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function close() {
-        if (false === ftp_close($this->connection)) {
-            throw new IOException(sprintf("ftp://%s disconnection failed", $this->authenticator->getHost()));
+        if (false === ftp_close($this->getConnection())) {
+            throw $this->newFTPException("disconnection failed");
         }
         return $this;
     }
@@ -63,33 +53,29 @@ class FTPClient {
      *
      * @param integer $timeout The timeout.
      * @return FTPClient Returns this FTP client.
-     * @throws IOException Throws an IO exception if an I/O error occurs.
+     * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function connect($timeout = 90) {
-        if (false === ($this->connection = ftp_connect($this->authenticator->getHost(), $this->authenticator->getPort(), $timeout))) {
-            throw new IOException(sprintf("ftp://%s connection failed", $this->authenticator->getHost()));
+        $host = $this->getAuthenticator()->getHost();
+        $port = $this->getAuthenticator()->getPort();
+        $this->setConnection(ftp_connect($host, $port, $timeout));
+        if (false === $this->getConnection()) {
+            throw $this->newFTPException("connection failed");
         }
         return $this;
-    }
-
-    /**
-     * Get the authenticator.
-     *
-     * @return Auhtenticator Returns the authenticator.
-     */
-    public function getAuthenticator() {
-        return $this->authenticator;
     }
 
     /**
      * Logs in to this FTP connection.
      *
      * @return FTPClient Returns this FTP client.
-     * @throws IOException Throws an IO exception if an I/O error occurs.
+     * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function login() {
-        if (false === ftp_login($this->connection, $this->authenticator->getPasswordAuthentication()->getUsername(), $this->authenticator->getPasswordAuthentication()->getPassword())) {
-            throw new IOException(sprintf("ftp://%s:%s@%s failed", $this->authenticator->getHost(), $this->authenticator->getPasswordAuthentication()->getUsername(), $this->authenticator->getPasswordAuthentication()->getPassword()));
+        $username = $this->getAuthenticator()->getPasswordAuthentication()->getUsername();
+        $password = $this->getAuthenticator()->getPasswordAuthentication()->getPassword();
+        if (false === ftp_login($this->getConnection(), $username, $password)) {
+            throw $this->newFTPException("login failed");
         }
         return $this;
     }
@@ -99,23 +85,12 @@ class FTPClient {
      *
      * @param string $directory The directory.
      * @return FTPClient Returns this FTP client.
-     * @throws IOException Throws an IO exception if an I/O error occurs.
+     * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function mkdir($directory) {
-        if (false === ftp_mkdir($this->connection, $directory)) {
-            throw new IOException(sprintf("mkdir %s failed", $directory));
+        if (false === ftp_mkdir($this->getConnection(), $directory)) {
+            throw $this->newFTPException(sprintf("mkdir %s failed", $directory));
         }
-        return $this;
-    }
-
-    /**
-     * Set the authenticator.
-     *
-     * @param Authenticator $authenticator The authenticator.
-     * @return FTPClient Returns this FTP client.
-     */
-    public function setAuthenticator(Authenticator $authenticator) {
-        $this->authenticator = $authenticator;
         return $this;
     }
 

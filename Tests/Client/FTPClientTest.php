@@ -28,11 +28,18 @@ use WBW\Library\FTP\Client\FTPClient;
 final class FTPClientTest extends PHPUnit_Framework_TestCase {
 
     /**
-     * Authenticator.
+     * Authenticator (read-only).
      *
      * @var Authenticator
      */
-    private $authenticator;
+    private $authenticatorR;
+
+    /**
+     * Authenticator (read-write).
+     *
+     * @var Authenticator
+     */
+    private $authenticatorW;
 
     /**
      * {@inheritdoc}
@@ -41,11 +48,12 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         parent::setUp();
 
         // Set a Password authentication.
-        $passwordAuthentication = new PasswordAuthentication("anonymous", "guest");
+        $passwordAuthenticationR = new PasswordAuthentication("anonymous", "guest");
+        $passwordAuthenticationW = new PasswordAuthentication("dlpuser@dlptest.com", "eiTqR7EMZD5zy7M");
 
-        // Set the Authenticator mock.
-        $this->authenticator = new Authenticator("speedtest.tele2.net", $passwordAuthentication);
-        $this->authenticator->setPort(21);
+        // Set the Authenticator mocks.
+        $this->authenticatorR = new Authenticator("speedtest.tele2.net", $passwordAuthenticationR);
+        $this->authenticatorW = new Authenticator("ftp.dlptest.com", $passwordAuthenticationW);
     }
 
     /**
@@ -55,9 +63,9 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
      */
     public function testConstructor() {
 
-        $obj = new FTPClient($this->authenticator);
+        $obj = new FTPClient($this->authenticatorR);
 
-        $this->assertEquals($this->authenticator, $obj->getAuthenticator());
+        $this->assertEquals($this->authenticatorR, $obj->getAuthenticator());
     }
 
     /**
@@ -67,7 +75,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
      */
     public function testConnect() {
 
-        $obj = new FTPClient($this->authenticator);
+        $obj = new FTPClient($this->authenticatorR);
 
         $this->assertEquals($obj, $obj->connect());
 
@@ -76,7 +84,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
             $obj->connect(2);
         } catch (Exception $ex) {
             $this->assertInstanceOf(IOException::class, $ex);
-            $this->assertEquals("ftp://github.com connection failed", $ex->getMessage());
+            $this->assertEquals("ftp://anonymous:guest@github.com:21 connection failed", $ex->getMessage());
         }
     }
 
@@ -88,7 +96,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
      */
     public function testLogin() {
 
-        $obj = new FTPClient($this->authenticator);
+        $obj = new FTPClient($this->authenticatorR);
         $obj->connect();
 
         $this->assertEquals($obj, $obj->login());
@@ -102,9 +110,11 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
      */
     public function testMkdir() {
 
-        $obj = new FTPClient($this->authenticator);
+        $obj = new FTPClient($this->authenticatorW);
         $obj->connect();
         $obj->login();
+
+        $this->assertEquals($obj, $obj->mkdir("ftp-library"));
     }
 
     /**
@@ -115,7 +125,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
      */
     public function testClose() {
 
-        $obj = new FTPClient($this->authenticator);
+        $obj = new FTPClient($this->authenticatorR);
         $obj->connect();
 
         $this->assertEquals($obj, $obj->close());
