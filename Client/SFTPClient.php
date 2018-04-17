@@ -133,7 +133,6 @@ class SFTPClient extends AbstractFTPClient {
      *
      * @param string $localFile The local file.
      * @param string $remoteFile The remote file.
-     * @param integer $createMode The create mode.
      * @return SFTPClient Returns this SFTP client.
      * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
