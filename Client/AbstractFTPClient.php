@@ -53,7 +53,7 @@ abstract class AbstractFTPClient {
      * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function close() {
-        if (false === @ftp_close($this->getConnection())) {
+        if (false === @ftp_close($this->connection)) {
             throw $this->newFTPException("close failed");
         }
         return $this;
@@ -76,7 +76,7 @@ abstract class AbstractFTPClient {
      * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function delete($path) {
-        if (false === @ftp_delete($this->getConnection(), $path)) {
+        if (false === @ftp_delete($this->connection, $path)) {
             throw $this->newFTPException(sprintf("delete %s failed", $path));
         }
         return $this;
@@ -109,7 +109,7 @@ abstract class AbstractFTPClient {
     public function login() {
         $username = $this->getAuthenticator()->getPasswordAuthentication()->getUsername();
         $password = $this->getAuthenticator()->getPasswordAuthentication()->getPassword();
-        if (false === @ftp_login($this->getConnection(), $username, $password)) {
+        if (false === @ftp_login($this->connection, $username, $password)) {
             throw $this->newFTPException("login failed");
         }
         return $this;
@@ -133,7 +133,7 @@ abstract class AbstractFTPClient {
      * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function pasv($pasv) {
-        if (false === @ftp_pasv($this->getConnection(), $pasv)) {
+        if (false === @ftp_pasv($this->connection, $pasv)) {
             throw $this->newFTPException(sprintf("pasv from %d to %d failed", !$pasv, $pasv));
         }
         return $this;
@@ -150,7 +150,7 @@ abstract class AbstractFTPClient {
      * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function put($localFile, $remoteFile, $mode = FTP_IMAGE, $startPos = 0) {
-        if (false === @ftp_put($this->getConnection(), $remoteFile, $localFile, $mode, $startPos)) {
+        if (false === @ftp_put($this->connection, $remoteFile, $localFile, $mode, $startPos)) {
             throw $this->newFTPException(sprintf("put %s into %s failed", $localFile, $remoteFile));
         }
         return $this;
@@ -164,7 +164,7 @@ abstract class AbstractFTPClient {
      * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function mkdir($directory) {
-        if (false === @ftp_mkdir($this->getConnection(), $directory)) {
+        if (false === @ftp_mkdir($this->connection, $directory)) {
             throw $this->newFTPException(sprintf("mkdir %s failed", $directory));
         }
         return $this;
@@ -179,7 +179,7 @@ abstract class AbstractFTPClient {
      * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function rename($oldName, $newName) {
-        if (false === @ftp_rename($this->getConnection(), $oldName, $newName)) {
+        if (false === @ftp_rename($this->connection, $oldName, $newName)) {
             throw $this->newFTPException(sprintf("rename %s into %s failed", $oldName, $newName));
         }
         return $this;
@@ -193,7 +193,7 @@ abstract class AbstractFTPClient {
      * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
     public function rmdir($directory) {
-        if (false === @ftp_rmdir($this->getConnection(), $directory)) {
+        if (false === @ftp_rmdir($this->connection, $directory)) {
             throw $this->newFTPException(sprintf("rmdir %s failed", $directory));
         }
         return $this;
