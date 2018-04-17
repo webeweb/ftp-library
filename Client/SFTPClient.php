@@ -12,6 +12,7 @@
 namespace WBW\Library\FTP\Client;
 
 use WBW\Library\Core\Security\Authenticator;
+use WBW\Library\FTP\Exception\FTPException;
 
 /**
  * SFTP client.
@@ -35,14 +36,32 @@ class SFTPClient extends AbstractFTPClient {
     }
 
     /**
-     * {@inheritdoc}
+     * Opens this FTP connection.
+     *
+     * @return SFTPClient Returns this SFTP client.
+     * @throws FTPException Throws a FTP exception if an I/O error occurs.
      */
-    public function connect($timeout = 90) {
+    public function connect() {
         $host = $this->getAuthenticator()->getHost();
         $port = $this->getAuthenticator()->getPort();
-        $this->setConnection(@ftp_ssl_connect($host, $port, $timeout));
+        $this->setConnection(ssh2_ssl_connect($host, $port));
         if (false === $this->getConnection()) {
             throw $this->newFTPException("connection failed");
+        }
+        return $this;
+    }
+
+    /**
+     * Logs in to this FTP connection.
+     *
+     * @return SFTPClient Returns this SFTP client.
+     * @throws FTPException Throws a FTP exception if an I/O error occurs.
+     */
+    public function login() {
+        $username = $this->getAuthenticator()->getPasswordAuthentication()->getUsername();
+        $password = $this->getAuthenticator()->getPasswordAuthentication()->getPassword();
+        if (false === ssh2_auth_password($this->getConnection(), $username, $password)) {
+            throw $this->newFTPException("login failed");
         }
         return $this;
     }
