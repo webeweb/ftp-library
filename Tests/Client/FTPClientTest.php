@@ -13,7 +13,6 @@ namespace WBW\Library\FTP\Tests\Client;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
-use WBW\Library\Core\Exception\IO\IOException;
 use WBW\Library\Core\Security\Authenticator;
 use WBW\Library\Core\Security\PasswordAuthentication;
 use WBW\Library\FTP\Client\FTPClient;
@@ -98,7 +97,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
             $obj->getAuthenticator()->setHost("github.com");
             $obj->connect(2); // Set a low timeout.
         } catch (Exception $ex) {
-            $this->assertInstanceOf(IOException::class, $ex);
+            $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals("ftp://anonymous:guest@github.com:21 connection failed", $ex->getMessage());
         }
     }
@@ -120,7 +119,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
             $obj->getAuthenticator()->getPasswordAuthentication()->setPassword(null);
             $obj->login();
         } catch (Exception $ex) {
-            $this->assertInstanceOf(IOException::class, $ex);
+            $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals("ftp://anonymous:@speedtest.tele2.net:21 login failed", $ex->getMessage());
         }
     }
