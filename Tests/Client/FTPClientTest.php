@@ -79,7 +79,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
 
         $obj = new FTPClient($this->authenticatorW);
 
-        $this->assertEquals($this->authenticatorW, $obj->getAuthenticator());
+        $this->assertSame($this->authenticatorW, $obj->getAuthenticator());
     }
 
     /**
@@ -91,7 +91,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
 
         $obj = new FTPClient($this->authenticatorR);
 
-        $this->assertEquals($obj, $obj->connect());
+        $this->assertSame($obj, $obj->connect());
 
         try {
             $obj->getAuthenticator()->setHost("github.com");
@@ -113,7 +113,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj = new FTPClient($this->authenticatorR);
         $obj->connect();
 
-        $this->assertEquals($obj, $obj->login());
+        $this->assertSame($obj, $obj->login());
 
         try {
             $obj->getAuthenticator()->getPasswordAuthentication()->setPassword(null);
@@ -136,7 +136,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->connect();
         $obj->login();
 
-        $this->assertEquals($obj, $obj->mkdir(self::TEST_DIR));
+        $this->assertSame($obj, $obj->mkdir(self::TEST_DIR));
 
         try {
             $obj->mkdir(self::TEST_DIR);
@@ -162,7 +162,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->login();
         $obj->pasv(true);
 
-        $this->assertEquals($obj, $obj->put($local, $remote));
+        $this->assertSame($obj, $obj->put($local, $remote));
     }
 
     /**
@@ -179,7 +179,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->connect();
         $obj->login();
 
-        $this->assertEquals($obj, $obj->rename($remote, self::TEST_DIR . "/LICENSE.md"));
+        $this->assertSame($obj, $obj->rename($remote, self::TEST_DIR . "/LICENSE.md"));
 
         try {
             $obj->rename($remote, self::TEST_DIR . "/LICENSE.md");
@@ -203,10 +203,10 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->connect();
         $obj->login();
 
-        $this->assertEquals($obj, $obj->delete($remote));
+        $this->assertSame($obj, $obj->delete($remote));
 
         try {
-            $this->assertEquals($obj, $obj->delete($remote));
+            $this->assertSame($obj, $obj->delete($remote));
         } catch (Exception $ex) {
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals(self::TEST_FTP . " delete " . self::TEST_DIR . "/LICENSE.md failed", $ex->getMessage());
@@ -225,10 +225,10 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->connect();
         $obj->login();
 
-        $this->assertEquals($obj, $obj->rmdir(self::TEST_DIR));
+        $this->assertSame($obj, $obj->rmdir(self::TEST_DIR));
 
         try {
-            $this->assertEquals($obj, $obj->rmdir(self::TEST_DIR));
+            $this->assertSame($obj, $obj->rmdir(self::TEST_DIR));
         } catch (Exception $ex) {
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals(self::TEST_FTP . " rmdir " . self::TEST_DIR . " failed", $ex->getMessage());
@@ -246,10 +246,10 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj = new FTPClient($this->authenticatorW);
         $obj->connect();
 
-        $this->assertEquals($obj, $obj->close());
+        $this->assertSame($obj, $obj->close());
 
         try {
-            $this->assertEquals($obj, $obj->close());
+            $this->assertSame($obj, $obj->close());
         } catch (Exception $ex) {
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals(self::TEST_FTP . " close failed", $ex->getMessage());
