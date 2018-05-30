@@ -17,6 +17,7 @@ considered stable.
 Requires:
 
 [![ext-ssh2](https://img.shields.io/badge/PHP-ext--ssh2-blue.svg)](http://php.net/manual/en/book.ssh2.php)
+
 ---
 
 ## Installation
