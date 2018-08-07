@@ -39,7 +39,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
      *
      * @var string
      */
-    const TEST_FTP = "ftp://dlpuser@dlptest.com:eiTqR7EMZD5zy7M@ftp.dlptest.com:21";
+    const TEST_FTP = "ftp://dlpuser@dlptest.com:3D6XZV9MKdhM5fF@ftp.dlptest.com:21";
 
     /**
      * Authenticator (read-only).
@@ -63,7 +63,7 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
 
         // Set the Password authentications.
         $passwordAuthenticationR = new PasswordAuthentication("anonymous", "guest");
-        $passwordAuthenticationW = new PasswordAuthentication("dlpuser@dlptest.com", "eiTqR7EMZD5zy7M");
+        $passwordAuthenticationW = new PasswordAuthentication("dlpuser@dlptest.com", "3D6XZV9MKdhM5fF");
 
         // Set the Authenticator mocks.
         $this->authenticatorR = new Authenticator("speedtest.tele2.net", $passwordAuthenticationR);
