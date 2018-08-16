@@ -1,7 +1,7 @@
 {
     "name": "webeweb/ftp-library",
     "type": "library",
-    "description": "FTP library",
+    "description": "Integrate FTP/SFTP in your projects",
     "keywords": ["webeweb", "library", "ftp", "ftps", "sftp"],
     "homepage": "http://github.com/webeweb/ftp-library",
     "license": "LGPL-3.0-only",
