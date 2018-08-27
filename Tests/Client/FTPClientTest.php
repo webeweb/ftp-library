@@ -91,12 +91,16 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
 
         $obj = new FTPClient($this->authenticatorR);
 
+        // ===
         $this->assertSame($obj, $obj->connect());
 
+        // ===
         try {
+
             $obj->getAuthenticator()->setHost("github.com");
             $obj->connect(2); // Set a low timeout.
         } catch (Exception $ex) {
+
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals("ftp://anonymous:guest@github.com:21 connection failed", $ex->getMessage());
         }
@@ -113,12 +117,16 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj = new FTPClient($this->authenticatorR);
         $obj->connect();
 
+        // ===
         $this->assertSame($obj, $obj->login());
 
+        // ===
         try {
+
             $obj->getAuthenticator()->getPasswordAuthentication()->setPassword(null);
             $obj->login();
         } catch (Exception $ex) {
+
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals("ftp://anonymous:@speedtest.tele2.net:21 login failed", $ex->getMessage());
         }
@@ -136,11 +144,15 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->connect();
         $obj->login();
 
+        // ===
         $this->assertSame($obj, $obj->mkdir(self::TEST_DIR));
 
+        // ===
         try {
+
             $obj->mkdir(self::TEST_DIR);
         } catch (Exception $ex) {
+
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals(self::TEST_FTP . " mkdir " . self::TEST_DIR . " failed", $ex->getMessage());
         }
@@ -179,11 +191,15 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->connect();
         $obj->login();
 
+        // ===
         $this->assertSame($obj, $obj->rename($remote, self::TEST_DIR . "/LICENSE.md"));
 
+        // ===
         try {
+
             $obj->rename($remote, self::TEST_DIR . "/LICENSE.md");
         } catch (Exception $ex) {
+
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals(self::TEST_FTP . " rename " . $remote . " into " . self::TEST_DIR . "/LICENSE.md failed", $ex->getMessage());
         }
@@ -203,11 +219,15 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->connect();
         $obj->login();
 
+        // ===
         $this->assertSame($obj, $obj->delete($remote));
 
+        // ===
         try {
+
             $this->assertSame($obj, $obj->delete($remote));
         } catch (Exception $ex) {
+
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals(self::TEST_FTP . " delete " . self::TEST_DIR . "/LICENSE.md failed", $ex->getMessage());
         }
@@ -225,11 +245,15 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj->connect();
         $obj->login();
 
+        // ===
         $this->assertSame($obj, $obj->rmdir(self::TEST_DIR));
 
+        // ===
         try {
+
             $this->assertSame($obj, $obj->rmdir(self::TEST_DIR));
         } catch (Exception $ex) {
+
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals(self::TEST_FTP . " rmdir " . self::TEST_DIR . " failed", $ex->getMessage());
         }
@@ -246,11 +270,15 @@ final class FTPClientTest extends PHPUnit_Framework_TestCase {
         $obj = new FTPClient($this->authenticatorW);
         $obj->connect();
 
+        // ===
         $this->assertSame($obj, $obj->close());
 
+        // ===
         try {
+
             $this->assertSame($obj, $obj->close());
         } catch (Exception $ex) {
+
             $this->assertInstanceOf(FTPException::class, $ex);
             $this->assertEquals(self::TEST_FTP . " close failed", $ex->getMessage());
         }
