@@ -58,5 +58,5 @@ $ vendor/bin/phpunit
 
 ## License
 
-ftp-library is released under the LGPL License. See the bundled [LICENSE](LICENSE)
+`ftp-library` is released under the LGPL License. See the bundled [LICENSE](LICENSE)
 file for details.
