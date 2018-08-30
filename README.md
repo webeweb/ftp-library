@@ -5,8 +5,9 @@ ftp-library
 
 Integrate FTP with your projects.
 
-`ftp-library` uses a rolling release based on git master branch which is
-considered stable.
+> IMPORTANT NOTICE: This package is no longer maintained and its classes have
+> been migrated into package "core-library" (available into version up to 4.2.0
+> and more) [Core library](https://github.com/webeweb/core-library/)
 
 ---
 
