@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the ftp-library package.
  *
  * (c) 2018 WEBEWEB
@@ -9,30 +9,29 @@
  * file that was distributed with this source code.
  */
 
-namespace WBW\Library\FTP\Tests\Exception;
+namespace WBW\Library\Ftp\Tests\Exception;
 
-use PHPUnit_Framework_TestCase;
-use WBW\Library\FTP\Exception\FTPException;
+use WBW\Library\Ftp\Exception\FtpException;
+use WBW\Library\Ftp\Tests\AbstractTestCase;
 
 /**
  * FTP exception test.
  *
  * @author webeweb <https://github.com/webeweb/>
- * @package WBW\Library\FTP\Tests\Exception
+ * @package WBW\Library\Ftp\Tests\Exception
  */
-final class FTPExceptionTest extends PHPUnit_Framework_TestCase {
+class FtpExceptionTest extends AbstractTestCase {
 
     /**
      * Tests the __construct() method.
      *
      * @return void
      */
-    public function testConstruct() {
+    public function test__construct(): void {
 
-        $obj = new FTPException("exception");
+        $obj = new FtpException("exception");
 
         $res = "exception";
         $this->assertEquals($res, $obj->getMessage());
     }
-
 }
