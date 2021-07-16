@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the ftp-library package.
  *
  * (c) 2018 WEBEWEB
@@ -9,19 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace WBW\Library\FTP\Client;
+namespace WBW\Library\Ftp\Client;
 
-use WBW\Library\Core\Security\Authenticator;
-use WBW\Library\FTP\Exception\FTPException;
+use WBW\Library\Ftp\Exception\FtpException;
+use WBW\Library\Ftp\Security\Authenticator;
 
 /**
- * Abstract FTP client.
+ * Abstract client.
  *
  * @author webeweb <https://github.com/webeweb/>
- * @package WBW\Library\FTP\Client
+ * @package WBW\Library\Ftp\Client
  * @abstract
  */
-abstract class AbstractFTPClient {
+abstract class AbstractClient {
 
     /**
      * Authenticator.
@@ -43,15 +43,15 @@ abstract class AbstractFTPClient {
      * @param Authenticator $authenticator The authenticator.
      */
     protected function __construct(Authenticator $authenticator) {
-        $this->authenticator = $authenticator;
+        $this->setAuthenticator($authenticator);
     }
 
     /**
      * Get the authenticator.
      *
-     * @return Authenticator Returns the authenticator.
+     * @return Authenticator|null Returns the authenticator.
      */
-    final public function getAuthenticator() {
+    public function getAuthenticator(): ?Authenticator {
         return $this->authenticator;
     }
 
@@ -60,27 +60,37 @@ abstract class AbstractFTPClient {
      *
      * @return mixed Returns the connection.
      */
-    final public function getConnection() {
+    public function getConnection() {
         return $this->connection;
     }
 
     /**
-     * Construct a new FTP exception.
+     * Create a new FTP exception.
      *
      * @param string $message The message.
-     * @return FTPException Returns a new FTP exception.
+     * @return FtpException Returns a new FTP exception.
      */
-    final protected function newFTPException($message) {
-        return new FTPException(sprintf("%s://%s:%s@%s:%d " . $message, $this->authenticator->getScheme(), $this->authenticator->getPasswordAuthentication()->getUsername(), $this->authenticator->getPasswordAuthentication()->getPassword(), $this->authenticator->getHost(), $this->authenticator->getPort()));
+    protected function newFtpException(string $message): FtpException {
+
+        $format = "%s://%s:%s@%s:%d $message";
+        $args   = [
+            $this->getAuthenticator()->getScheme(),
+            $this->getAuthenticator()->getPasswordAuthentication()->getUsername(),
+            $this->getAuthenticator()->getPasswordAuthentication()->getPassword(),
+            $this->getAuthenticator()->getHostname(),
+            $this->getAuthenticator()->getPort(),
+        ];
+
+        return new FtpException(vsprintf($format, $args));
     }
 
     /**
      * Set the authenticator.
      *
      * @param Authenticator $authenticator The authenticator.
-     * @returns AbstractFTPClient Returns this abstract FTP client.
+     * @return AbstractClient Returns this client.
      */
-    final protected function setAuthenticator(Authenticator $authenticator) {
+    protected function setAuthenticator(Authenticator $authenticator): AbstractClient {
         $this->authenticator = $authenticator;
         return $this;
     }
@@ -89,11 +99,10 @@ abstract class AbstractFTPClient {
      * Set the connection.
      *
      * @param mixed $connection The connection.
-     * @returns AbstractFTPClient Returns this abstract FTP client.
+     * @return AbstractClient Returns this client.
      */
-    final protected function setConnection($connection) {
+    protected function setConnection($connection): AbstractClient {
         $this->connection = $connection;
         return $this;
     }
-
 }
