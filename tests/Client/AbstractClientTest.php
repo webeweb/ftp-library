@@ -11,6 +11,7 @@
 
 namespace WBW\Library\Ftp\Tests\Client;
 
+use WBW\Library\Ftp\Exception\FtpException;
 use WBW\Library\Ftp\Tests\AbstractTestCase;
 use WBW\Library\Ftp\Tests\Fixtures\Client\TestClient;
 
@@ -21,6 +22,36 @@ use WBW\Library\Ftp\Tests\Fixtures\Client\TestClient;
  * @package WBW\Library\Ftp\Tests\Client
  */
 class AbstractClientTest extends AbstractTestCase {
+
+    /**
+     * Tests the newFtpException() method.
+     *
+     * @return void
+     */
+    public function testNewFtpException(): void {
+
+        $obj = new TestClient($this->authenticator);
+
+        $ex = $obj->newFtpException("exception");
+        $this->assertInstanceOf(FtpException::class, $ex);
+
+        $this->assertEquals("://user:pass@hostname:0 exception", $ex->getMessage());
+        $this->assertEquals(500, $ex->getCode());
+        $this->assertNull($ex->getPrevious());
+    }
+
+    /**
+     * Tests the setConnection() method.
+     *
+     * @return void
+     */
+    public function testSetConnection(): void {
+
+        $obj = new TestClient($this->authenticator);
+
+        $obj->setConnection("connection");
+        $this->assertEquals("connection", $obj->getConnection());
+    }
 
     /**
      * Tests the __construct() method.

@@ -12,6 +12,7 @@
 namespace WBW\Library\Ftp\Tests\Fixtures\Client;
 
 use WBW\Library\Ftp\Client\AbstractClient;
+use WBW\Library\Ftp\Exception\FtpException;
 use WBW\Library\Ftp\Security\Authenticator;
 
 /**
@@ -29,5 +30,19 @@ class TestClient extends AbstractClient {
      */
     public function __construct(Authenticator $authenticator) {
         parent::__construct($authenticator);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function newFtpException(string $message): FtpException {
+        return parent::newFtpException($message);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setConnection($connection): AbstractClient {
+        return parent::setConnection($connection);
     }
 }
