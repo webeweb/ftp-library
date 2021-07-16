@@ -1,25 +1,22 @@
 ftp-library
 ===========
 
-[![Build Status](https://travis-ci.org/webeweb/ftp-library.svg?branch=master)](https://travis-ci.org/webeweb/ftp-library) [![Coverage Status](https://coveralls.io/repos/github/webeweb/ftp-library/badge.svg?branch=master)](https://coveralls.io/github/webeweb/ftp-library?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/webeweb/ftp-library/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/webeweb/ftp-library/?branch=master) [![Latest Stable Version](https://poser.pugx.org/webeweb/ftp-library/v/stable)](https://packagist.org/packages/webeweb/ftp-library) [![Latest Unstable Version](https://poser.pugx.org/webeweb/ftp-library/v/unstable)](https://packagist.org/packages/webeweb/ftp-library) [![License](https://poser.pugx.org/webeweb/ftp-library/license)](https://packagist.org/packages/webeweb/ftp-library) [![composer.lock](https://poser.pugx.org/webeweb/ftp-library/composerlock)](https://packagist.org/packages/webeweb/ftp-library)
+[![Build Status](https://img.shields.io/github/workflow/status/webeweb/ftp-library/build?style=flat-square)](https://github.com/webeweb/ftp-library/actions)
+[![Coverage Status](https://img.shields.io/coveralls/github/webeweb/ftp-library/master.svg?style=flat-square)](https://coveralls.io/github/webeweb/ftp-library?branch=master)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/quality/g/webeweb/ftp-library/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/webeweb/ftp-library/?branch=master)
+[![Latest Stable Version](https://img.shields.io/packagist/v/webeweb/ftp-library.svg?style=flat-square)](https://packagist.org/packages/webeweb/ftp-library)
+[![Latest Unstable Version](https://img.shields.io/packagist/vpre/webeweb/ftp-library.svg?style=flat-square)](https://packagist.org/packages/webeweb/ftp-library)
+[![License](https://img.shields.io/packagist/l/webeweb/ftp-library.svg?style=flat-square)](https://packagist.org/packages/webeweb/ftp-library)
+[![composer.lock](https://img.shields.io/badge/.lock-uncommited-important.svg?style=flat-square)](https://packagist.org/packages/webeweb/ftp-library)
 
-Integrate FTP with your projects.
+Integrate FTP with your projects
 
-> IMPORTANT NOTICE: This package is no longer maintained and its classes have
-> been migrated into package "core-library" (available into version up to 4.2.0
-> and more) [Core library](https://github.com/webeweb/core-library/)
-
----
+If you like this package, pay me a beer (or a coffee)
+[![paypal.me](https://img.shields.io/badge/paypal.me-webeweb-0070ba.svg?style=flat-square&logo=paypal)](https://www.paypal.me/webeweb)
 
 ## Compatibility
 
-[![PHP](https://img.shields.io/badge/PHP-%5E5.6%7C%5E7.0-blue.svg)](http://php.net)
-
-Requires:
-
-[![ext-ssh2](https://img.shields.io/badge/PHP-ext--ssh2-blue.svg)](http://php.net/manual/en/book.ssh2.php)
-
----
+[![PHP](https://img.shields.io/packagist/php-v/webeweb/ftp-library.svg?style=flat-square)](http://php.net)
 
 ## Installation
 
@@ -27,14 +24,16 @@ Open a command console, enter your project directory and execute the following
 command to download the latest stable version of this package:
 
 ```bash
-$ composer require webeweb/ftp-library "^1.0"
+$ composer require webeweb/ftp-library
 ```
 
 This command requires you to have Composer installed globally, as explained in
 the [installation chapter](https://getcomposer.org/doc/00-intro.md) of the
 Composer documentation.
 
----
+## Usage
+
+Read the [documentation](doc/index.md).
 
 ## Testing
 
@@ -43,9 +42,8 @@ Open a command console and execute the following commands to download the latest
 stable version of this package:
 
 ```bash
-$ mkdir ftp-library
+$ git clone https://github.com/webeweb/ftp-library.git
 $ cd ftp-library
-$ git clone git@github.com:webeweb/ftp-library.git .
 $ composer install
 ```
 
@@ -55,9 +53,12 @@ Once all required libraries are installed then do:
 $ vendor/bin/phpunit
 ```
 
----
-
 ## License
 
-`ftp-library` is released under the LGPL License. See the bundled [LICENSE](LICENSE)
+`ftp-library` is released under the MIT License. See the bundled [LICENSE](LICENSE)
 file for details.
+
+## Donate
+
+If you like this work, please consider donating at
+[![paypal.me](https://img.shields.io/badge/paypal.me-webeweb-0070ba.svg?style=flat-square&logo=paypal)](https://www.paypal.me/webeweb)
