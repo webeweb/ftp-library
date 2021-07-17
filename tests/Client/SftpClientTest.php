@@ -31,6 +31,11 @@ class SftpClientTest extends AbstractTestCase {
      */
     public function testGet(): void {
 
+        if (false === function_exists("ssh2_connect")) {
+            $this->assertNull(null);
+            return;
+        }
+
         $obj = new SftpClient($this->authenticator);
         $obj->connect();
         $obj->login();
