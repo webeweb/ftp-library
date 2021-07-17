@@ -186,7 +186,7 @@ class FtpClient extends AbstractClient {
     public function get(string $localFile, string $remoteFile, int $mode = FTP_BINARY, int $resumePos = 0): FtpClient {
 
         if (false === @ftp_get($this->getConnection(), $localFile, $remoteFile, $mode, $resumePos)) {
-            throw $this->newFtpException("ftp_get failed: [$localFile, $remoteFile, $mode, $remoteFile]");
+            throw $this->newFtpException("ftp_get failed: [$localFile, $remoteFile, $mode, $resumePos]");
         }
 
         return $this;
@@ -250,9 +250,9 @@ class FtpClient extends AbstractClient {
      * @param string $remoteFile The remote file.
      * @param int $mode The mode.
      * @param int $resumePos The resume position.
-     * @return int
+     * @return int|null
      */
-    public function nbFget($localStream, string $remoteFile, int $mode = FTP_BINARY, int $resumePos = 0): int {
+    public function nbFget($localStream, string $remoteFile, int $mode = FTP_BINARY, int $resumePos = 0): ?int {
         return @ftp_nb_fget($this->getConnection(), $localStream, $remoteFile, $mode, $resumePos);
     }
 
@@ -350,16 +350,17 @@ class FtpClient extends AbstractClient {
     /**
      * Returns the current directory name.
      *
-     * @return FtpClient Returns this FTP client.
+     * @return string Returns the current directory name.
      * @throws FtpException Throws a FTP exception if an error occurs.
      */
-    public function pwd(): FtpClient {
+    public function pwd(): string {
 
-        if (false === @ftp_pwd($this->getConnection())) {
+        $result = @ftp_pwd($this->getConnection());
+        if (false === $result) {
             throw $this->newFtpException("ftp_pwd failed");
         }
 
-        return $this;
+        return $result;
     }
 
     /**
@@ -374,7 +375,7 @@ class FtpClient extends AbstractClient {
 
         $result = @ftp_rawList($this->getConnection(), $directory, $recursive);
         if (false === $result) {
-            throw $this->newFtpException("ftp_nlist failed: [$directory, $recursive]");
+            throw $this->newFtpException("ftp_rawlist failed: [$directory, $recursive]");
         }
 
         return $result;
