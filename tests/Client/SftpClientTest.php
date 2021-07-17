@@ -11,6 +11,7 @@
 
 namespace WBW\Library\Ftp\Tests\Client;
 
+use Exception;
 use WBW\Library\Ftp\Client\SftpClient;
 use WBW\Library\Ftp\Tests\AbstractTestCase;
 
@@ -21,6 +22,23 @@ use WBW\Library\Ftp\Tests\AbstractTestCase;
  * @package WBW\Library\Ftp\Tests\Client
  */
 class SftpClientTest extends AbstractTestCase {
+
+    /**
+     * Tests the get() method.
+     *
+     * @return void
+     * @throws Exception Throws an exception if an error occurs.
+     */
+    public function testGet(): void {
+
+        $obj = new SftpClient($this->authenticator);
+        $obj->connect();
+        $obj->login();
+
+        $this->assertSame($obj, $obj->get($this->localFile, $this->remoteFile));
+
+        $obj->close();
+    }
 
     /**
      * Tests the __construct() method.

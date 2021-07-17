@@ -32,6 +32,20 @@ abstract class AbstractTestCase extends TestCase {
     protected $authenticator;
 
     /**
+     * Local directory.
+     *
+     * @var string
+     */
+    protected $localDir;
+
+    /**
+     * Local file.
+     *
+     * @var string
+     */
+    protected $localFile;
+
+    /**
      * Password authentication.
      *
      * @var PasswordAuthentication
@@ -39,16 +53,41 @@ abstract class AbstractTestCase extends TestCase {
     protected $passwordAuthentication;
 
     /**
+     * Remote directory.
+     *
+     * @var string
+     */
+    protected $remoteDir;
+
+    /**
+     * Remote file.
+     *
+     * @var string
+     */
+    protected $remoteFile;
+
+    /**
      * {@inheritDoc}
      */
     protected function setUp(): void {
         parent::setUp();
 
+        //
+        $this->remoteDir  = "/pub";
+        $this->remoteFile = "/readme.txt";
+
+        $this->localDir  = realpath(__DIR__ . "/..");
+        $this->localFile = implode("", [$this->localDir, $this->remoteFile]);
+
+        if (true === file_exists($this->localFile)) {
+            unlink($this->localFile);
+        }
+
         // Set a Password authentication mock.
-        $this->passwordAuthentication = new PasswordAuthentication("user", "pass");
+        $this->passwordAuthentication = new PasswordAuthentication("demo", "password");
 
         // Set an Authenticator mock.
-        $this->authenticator = new Authenticator("hostname", $this->passwordAuthentication);
+        $this->authenticator = new Authenticator("test.rebex.net", $this->passwordAuthentication);
         $this->authenticator->setPort(null);
     }
 }

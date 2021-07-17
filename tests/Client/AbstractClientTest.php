@@ -30,12 +30,22 @@ class AbstractClientTest extends AbstractTestCase {
      */
     public function testNewFtpException(): void {
 
+        $msg = implode("", [
+            "://",
+            $this->authenticator->getPasswordAuthentication()->getUsername(),
+            ":",
+            $this->authenticator->getPasswordAuthentication()->getPassword(),
+            "@",
+            $this->authenticator->getHostname(),
+            ":0 ",
+        ]);
+
         $obj = new TestClient($this->authenticator);
 
         $ex = $obj->newFtpException("exception");
         $this->assertInstanceOf(FtpException::class, $ex);
 
-        $this->assertEquals("://user:pass@hostname:0 exception", $ex->getMessage());
+        $this->assertEquals("{$msg}exception", $ex->getMessage());
         $this->assertEquals(500, $ex->getCode());
         $this->assertNull($ex->getPrevious());
     }

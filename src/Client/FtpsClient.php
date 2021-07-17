@@ -28,6 +28,7 @@ class FtpsClient extends FtpClient {
      * @param Authenticator $authenticator The authenticator.
      */
     public function __construct(Authenticator $authenticator) {
+
         $authenticator->setScheme("ftps");
         if (null === $authenticator->getPort()) {
             $authenticator->setPort(990);
