@@ -1,5 +1,5 @@
-# Composer
 /vendor/*
 /.phpunit.result.cache
 /composer.lock
+
 /readme.txt
